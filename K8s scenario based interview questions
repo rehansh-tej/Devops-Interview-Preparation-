@@ -1,0 +1,159 @@
+If your recently created Nginx pod is in a Pending state, you need to troubleshoot it using the following steps:
+
+
+---
+
+1. Check Pod Status
+
+Run the following command to get the pod status and reason for being Pending:
+
+kubectl get pods -o wide
+
+Look at the STATUS and AGE columns.
+
+
+---
+
+2. Describe the Pod for More Details
+
+kubectl describe pod <nginx-pod-name>
+
+Look for Events at the bottom.
+
+Check for messages like:
+
+FailedScheduling – Indicates scheduling issues.
+
+Insufficient CPU or Memory – Node doesn't have enough resources.
+
+Unschedulable – Constraints preventing scheduling.
+
+
+
+
+---
+
+3. Check if Any Node Can Schedule the Pod
+
+kubectl get nodes
+
+If nodes are NotReady, your cluster might have issues.
+
+If nodes have Taints, they may prevent scheduling.
+
+
+To see taints on nodes:
+
+kubectl describe node <node-name> | grep Taint
+
+If needed, remove a taint:
+
+kubectl taint nodes <node-name> <taint-key>:NoSchedule-
+
+
+---
+
+4. Check if There's an Issue with Resource Requests
+
+If the pod requests more CPU/memory than available, it stays Pending.
+
+Run:
+
+kubectl get pod <nginx-pod-name> -o yaml | grep -A5 resources
+
+If limits are too high, edit the deployment:
+
+kubectl edit deployment <deployment-name>
+
+Reduce resource requests under:
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+
+
+---
+
+5. Check if There’s a NodeSelector Issue
+
+If the pod has a nodeSelector that doesn’t match any available node, it won’t be scheduled.
+
+Check the pod’s node selector:
+
+kubectl get pod <nginx-pod-name> -o yaml | grep -A3 nodeSelector
+
+If incorrect, edit the deployment and remove the selector.
+
+
+---
+
+6. Check if There’s a Storage Issue (PVC Pending)
+
+If the pod needs a Persistent Volume Claim (PVC), but it’s not bound, it remains Pending.
+
+Check PVC status:
+
+kubectl get pvc
+
+If PVC is Pending, describe it:
+
+kubectl describe pvc <pvc-name>
+
+Fix storage class or create the required PV.
+
+
+---
+
+7. Check if There’s a Network Policy Blocking Scheduling
+
+If a NetworkPolicy blocks scheduling or prevents communication, list them:
+
+kubectl get networkpolicy -A
+
+Describe any restrictive policies:
+
+kubectl describe networkpolicy <policy-name>
+
+Modify or remove unnecessary policies.
+
+
+---
+
+8. Check if a PodDisruptionBudget (PDB) is Preventing Scheduling
+
+If the cluster enforces PodDisruptionBudget (PDB) rules, check them:
+
+kubectl get pdb -A
+
+Describe the policy:
+
+kubectl describe pdb <pdb-name>
+
+Adjust limits if needed.
+
+
+---
+
+9. Check Cluster Events for Additional Clues
+
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+This shows any cluster-wide issues affecting scheduling.
+
+
+---
+
+Final Steps: Fix and Reschedule
+
+After identifying the issue, you may need to:
+
+Edit the deployment (kubectl edit deployment nginx)
+
+Scale down/up (kubectl scale deployment nginx --replicas=0 && kubectl scale deployment nginx --replicas=1)
+
+Delete & recreate the pod (kubectl delete pod <nginx-pod-name>)
+
+
+Would you like help analyzing a specific error from the describe pod output?
+
