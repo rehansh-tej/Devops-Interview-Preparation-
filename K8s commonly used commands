@@ -1,0 +1,197 @@
+As a DevOps engineer, you frequently interact with Kubernetes (k8s) using kubectl. Below are commonly used Kubernetes commands categorized based on different aspects of cluster management:
+
+
+---
+
+1. Cluster Information & Context Management
+
+kubectl cluster-info – Display cluster information.
+
+kubectl get nodes – List all cluster nodes.
+
+kubectl config get-contexts – List available contexts.
+
+kubectl config use-context <context-name> – Switch to a specific context.
+
+kubectl get componentstatuses – Check the health of cluster components.
+
+
+
+---
+
+2. Working with Pods
+
+kubectl get pods -A – List all pods across namespaces.
+
+kubectl get pods -n <namespace> – List pods in a specific namespace.
+
+kubectl describe pod <pod-name> – Get detailed information about a pod.
+
+kubectl logs <pod-name> – View logs of a running pod.
+
+kubectl logs -f <pod-name> – Tail logs of a pod.
+
+kubectl exec -it <pod-name> -- /bin/sh – Access a running pod interactively.
+
+kubectl delete pod <pod-name> – Delete a pod.
+
+kubectl run <pod-name> --image=<image-name> --restart=Never – Create a standalone pod.
+
+
+
+---
+
+3. Deployments & ReplicaSets
+
+kubectl get deployments – List all deployments.
+
+kubectl describe deployment <deployment-name> – Get details of a deployment.
+
+kubectl scale deployment <deployment-name> --replicas=3 – Scale deployment replicas.
+
+kubectl rollout status deployment <deployment-name> – Check rollout status.
+
+kubectl rollout history deployment <deployment-name> – Check previous deployments.
+
+kubectl rollout undo deployment <deployment-name> – Roll back to a previous version.
+
+kubectl delete deployment <deployment-name> – Delete a deployment.
+
+
+
+---
+
+4. Services & Networking
+
+kubectl get services – List all services.
+
+kubectl describe service <service-name> – Get details of a service.
+
+kubectl expose deployment <deployment-name> --type=NodePort --port=80 – Expose a deployment as a service.
+
+kubectl port-forward pod/<pod-name> 8080:80 – Forward traffic to a pod.
+
+kubectl get ingress – List all ingress resources.
+
+kubectl describe ingress <ingress-name> – Get details of an ingress.
+
+
+
+---
+
+5. Namespaces
+
+kubectl get namespaces – List all namespaces.
+
+kubectl create namespace <namespace-name> – Create a new namespace.
+
+kubectl delete namespace <namespace-name> – Delete a namespace.
+
+kubectl get pods --all-namespaces – Get pods across all namespaces.
+
+
+
+---
+
+6. ConfigMaps & Secrets
+
+kubectl get configmaps – List all ConfigMaps.
+
+kubectl describe configmap <configmap-name> – View details of a ConfigMap.
+
+kubectl create configmap <configmap-name> --from-literal=key=value – Create a ConfigMap from CLI.
+
+kubectl get secrets – List all secrets.
+
+kubectl describe secret <secret-name> – View details of a secret.
+
+kubectl create secret generic <secret-name> --from-literal=key=value – Create a secret from CLI.
+
+
+
+---
+
+7. Monitoring & Troubleshooting
+
+kubectl top nodes – View CPU and memory usage of nodes.
+
+kubectl top pods – View CPU and memory usage of pods.
+
+kubectl get events --sort-by=.metadata.creationTimestamp – View cluster events in chronological order.
+
+kubectl get pods --field-selector=status.phase!=Running – Get non-running pods.
+
+kubectl describe node <node-name> – Get details about a node.
+
+kubectl logs <pod-name> -c <container-name> – View logs for a specific container in a pod.
+
+
+
+---
+
+8. Persistent Volumes & Storage
+
+kubectl get pv – List all persistent volumes.
+
+kubectl get pvc – List all persistent volume claims.
+
+kubectl describe pvc <pvc-name> – View details of a PVC.
+
+
+
+---
+
+9. Custom Resources & CRDs
+
+kubectl get crds – List all custom resource definitions.
+
+kubectl get <custom-resource> – List custom resources.
+
+kubectl describe <custom-resource> <resource-name> – Get details of a custom resource.
+
+
+
+---
+
+10. Apply, Edit & Delete Resources
+
+kubectl apply -f <file.yaml> – Apply a configuration file.
+
+kubectl edit <resource> <resource-name> – Edit a live resource interactively.
+
+kubectl delete -f <file.yaml> – Delete resources from a file.
+
+kubectl delete all --all – Delete all resources in a namespace.
+
+
+
+---
+
+11. Helm (For Kubernetes Package Management)
+
+helm list – List installed Helm releases.
+
+helm install <release-name> <chart> – Install a Helm chart.
+
+helm upgrade <release-name> <chart> – Upgrade a release.
+
+helm rollback <release-name> <revision> – Roll back to a previous version.
+
+helm uninstall <release-name> – Uninstall a release.
+
+
+
+---
+
+12. Kubernetes Debugging
+
+kubectl debug node/<node-name> --image=busybox – Debug a node using a temporary pod.
+
+kubectl attach <pod-name> -c <container-name> – Attach to a running container.
+
+
+
+---
+
+These commands cover essential Kubernetes operations that a DevOps/SRE professional frequently uses for managing and troubleshooting clusters efficiently. Do you need specific advanced troubleshooting or security-related commands as well?
+
