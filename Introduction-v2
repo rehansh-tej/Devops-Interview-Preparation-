@@ -1,0 +1,31 @@
+My name is Rehansh Tej Thalla, and I bring over 7 years of experience in the IT sector, with more than 5.6 years specifically in the DevOps domain. Currently, I work as a DevOps Engineer at Wipro Technologies, where I’ve been for the past 3 years.
+
+In my role at Wipro, I’m responsible for managing and automating the deployment processes through CI/CD pipelines. I collaborate closely with various cross-functional teams to ensure smooth and efficient integration of multiple stages into these pipelines. Our focus is on creating seamless, error-free deployment cycles that result in minimal downtime, and we leverage a variety of tools and cloud platforms to achieve that.
+
+Key Roles and Responsibilities:
+Building and Integrating CI/CD Pipelines: I am involved in building and continuously improving CI/CD pipelines for the deployment of applications. This involves automating the process from code commit to deployment in the cloud, ensuring that applications can be deployed quickly and reliably across various environments.
+
+Cloud Deployment on Azure and AWS: I manage the deployment of applications on major cloud platforms, including Azure and AWS, particularly using services like Azure Kubernetes Service (AKS) and AWS Elastic Kubernetes Service (EKS). My work ensures that the applications are deployed in a scalable, secure, and high-availability environment.
+
+Agile Methodology: We follow Agile methodology in our development and deployment processes. Each sprint lasts for 15 days, and we break down tasks into manageable stories. This allows the team to stay focused and deliver improvements in short cycles, which keeps everything flexible and iterative.
+
+Daily Standups and Task Management: During daily standups, I discuss the progress of ongoing tasks, address any blockers or dependencies, and make sure we are aligned on the goals for the day. We track our work efforts and progress using Jira, ensuring that every task is documented, prioritized, and completed on time.
+
+Terraform for Infrastructure Management: I have significant experience using Terraform to manage and automate infrastructure, which helps us maintain consistency across our environments. By defining infrastructure as code, I ensure that provisioning and modifications are done quickly and without manual intervention.
+
+Source Code Management and Collaboration (GitHub): I actively collaborate with the team through GitHub to manage and track source code. This is a central part of how we maintain version control and ensure that everyone is working with the latest codebase. It allows us to work collaboratively on feature development and bug fixes in an organized manner.
+
+Docker for Containerization: I build and maintain Docker images for containerized applications, which ensures that the applications are lightweight and portable. Containers also make deployments more consistent, as the environment remains the same across different stages of the pipeline.
+
+Automating CI/CD Processes (Harness, Azure Pipelines): I’ve worked with several CI/CD tools, such as Harness and Azure Pipelines, to automate the entire deployment process. This includes everything from code validation, testing, building, and finally deploying the application to production environments, all with minimal downtime and no human intervention.
+
+Managing Containers in AKS: I am responsible for managing and hosting applications on Azure Kubernetes Service (AKS). AKS provides a platform for deploying containers at scale, and I ensure that our apps are highly available and resilient, with proper load balancing, scaling, and monitoring in place.
+
+Monitoring with Splunk: I use Splunk to monitor application performance, health, and logs. With Splunk, we can gain real-time insights into system metrics, trace issues, and maintain a high level of visibility into the application's performance in production. This is crucial for identifying bottlenecks and ensuring that everything runs smoothly.
+
+Automation with Python and Shell Scripting: To improve team efficiency and reduce manual efforts, I’ve developed numerous Python and Shell scripts. These scripts automate tasks like log aggregation, system checks, and other repetitive processes, which significantly reduces manual overhead and error-prone activities.
+
+Key Achievement:
+One of the highlights of my career so far has been receiving an appreciation certificate from the Managing Director for leading and driving automation efforts within my team. This recognition was a result of the positive impact our automation initiatives had on reducing manual interventions, increasing productivity, and enhancing the overall quality of our deployments.
+
+In summary, my role as a DevOps Engineer revolves around automating the end-to-end deployment process, managing cloud infrastructure, optimizing application performance, and collaborating closely with various teams to ensure smooth and efficient operations. My experience with cloud platforms, CI/CD tools, and automation has allowed me to contribute significantly to my team's success.
