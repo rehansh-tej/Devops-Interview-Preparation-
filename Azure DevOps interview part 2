@@ -1,0 +1,196 @@
+Perfect! Let’s tailor the Azure DevOps questions using tools you specified: AKS (Azure Kubernetes Service), Shell scripting, Python, SonarQube, and Splunk — with real-time examples.
+
+
+---
+
+🚀 Git & Repository Management
+
+1. What’s the difference between GitFlow and trunk-based development?
+
+GitFlow uses multiple branches (feature, develop, release, hotfix).
+
+Real-time example: In a monolithic Python app for data analytics, devs use feature/data-cleanup and merge to develop, then main for production release.
+
+
+Trunk-Based Development means all devs merge frequently into a single main branch.
+
+Real-time example: In an AKS-hosted microservice with CI/CD in Azure DevOps, each microservice (e.g., Python Flask app) is deployed from main directly using feature flags.
+
+
+
+2. How do you use branch policies and merge strategies in Azure Repos?
+
+Enforce PRs with reviewers, successful build, and SonarQube code quality gates.
+
+Real-time example:
+
+PR build runs shell-based unit tests and triggers a SonarQube quality scan.
+
+Block merge if coverage < 80% or critical bugs exist.
+
+
+
+
+3. What are Git tags and how do you use them in release management?
+
+Tags mark versions like v1.0.0.
+
+Real-time example: After successful AKS deployment of a Python API, tag commit as v1.0.0. A pipeline listens to tags and auto-deploys using Helm to AKS.
+
+
+
+
+---
+
+🔐 Security & Compliance
+
+1. How do you scan container images for vulnerabilities in your CI pipeline?
+
+Use Trivy or Microsoft Defender to scan Docker images.
+
+Real-time example: Shell script in pipeline runs:
+
+trivy image myregistry.azurecr.io/myapp:latest
+
+If CRITICAL vulnerabilities are found, the build fails before pushing to AKS.
+
+
+
+
+2. How do you enforce role-based access control across Azure DevOps projects?
+
+Use Azure AD groups, and in AKS, use RBAC with Kubernetes Roles/Bindings.
+
+Real-time example:
+
+Only DevOps team (via AD group) can access Helm charts in release pipeline.
+
+AKS access: Python script uses kubectl create rolebinding for read-only access to QA team.
+
+
+
+
+3. How would you protect secrets in YAML pipelines without hardcoding?
+
+Store secrets in Azure Key Vault or as variable groups in Azure DevOps.
+
+Real-time example: Python script in a pipeline pulls DB credentials via Key Vault:
+
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
+
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url="https://myvault.vault.azure.net/", credential=credential)
+db_password = client.get_secret("DBPassword").value
+
+
+
+
+---
+
+📊 Monitoring & Logging
+
+1. How do you trace deployment issues using Azure Monitor and Application Insights?
+
+Use Splunk and App Insights to correlate logs and metrics.
+
+Real-time example: Python Flask app deployed on AKS logs errors to Splunk. A dashboard in Splunk shows spike in 500 errors. Drilldown shows the pod that failed deployment due to missing environment variables.
+
+
+
+2. What’s the difference between a log-based alert and a metric-based alert?
+
+Metric-based: Threshold based (e.g., CPU > 80%).
+
+Log-based: Uses logs (Splunk/App Insights) to trigger alerts based on specific patterns.
+
+Real-time example:
+
+Metric alert: AKS pod CPU > 90%
+
+Log alert: Splunk detects “UnauthorizedAccess” error > 20 times in 5 mins.
+
+
+
+
+3. How do you monitor Azure DevOps pipeline performance and failures?
+
+Use Splunk to ingest Azure DevOps logs via REST API or Diagnostic logs.
+
+Real-time example: Shell script pushes pipeline run metadata to Splunk. Dashboards show average build time and failure causes.
+
+
+
+4. How do you integrate Azure DevOps logs with Log Analytics or Splunk?
+
+Export pipeline logs using Azure REST API and forward to Splunk.
+
+Python example:
+
+import requests
+headers = {"Authorization": "Bearer <token>"}
+url = "https://dev.azure.com/org/project/_apis/build/builds?api-version=7.0"
+builds = requests.get(url, headers=headers).json()
+for build in builds["value"]:
+    print(build["result"], build["startTime"])
+
+
+
+
+---
+
+⚙️ Scripting & Automation
+
+1. Write a PowerShell or Shell script to fetch the last successful run of a pipeline in Azure DevOps.
+
+#!/bin/bash
+org="yourOrg"
+project="yourProject"
+pipelineId=5
+pat="yourPAT"
+auth=$(echo ":$pat" | base64)
+
+curl -s -H "Authorization: Basic $auth" \
+"https://dev.azure.com/$org/$project/_apis/pipelines/$pipelineId/runs?status=completed&result=succeeded&api-version=6.0" \
+| jq '.value[0]'
+
+2. Automate backup of Azure DevOps project settings using REST API and Bash.
+
+#!/bin/bash
+org="yourOrg"
+project="yourProject"
+pat="yourPAT"
+auth=$(echo ":$pat" | base64)
+
+curl -s -H "Authorization: Basic $auth" \
+"https://dev.azure.com/$org/_apis/projects/$project?api-version=6.0" \
+-o "${project}_settings_backup.json"
+
+3. Write a script to delete old pipeline runs older than 30 days.
+
+import requests, datetime
+from base64 import b64encode
+
+org = "yourOrg"
+project = "yourProject"
+pipeline_id = 5
+pat = "yourPAT"
+auth = b64encode(f":{pat}".encode()).decode()
+headers = {"Authorization": f"Basic {auth}"}
+
+url = f"https://dev.azure.com/{org}/{project}/_apis/pipelines/{pipeline_id}/runs?api-version=6.0"
+runs = requests.get(url, headers=headers).json()["value"]
+
+for run in runs:
+    created = datetime.datetime.strptime(run["createdDate"], "%Y-%m-%dT%H:%M:%S.%fZ")
+    if (datetime.datetime.utcnow() - created).days > 30:
+        run_id = run["id"]
+        del_url = f"https://dev.azure.com/{org}/{project}/_apis/pipelines/{pipeline_id}/runs/{run_id}?api-version=6.0"
+        del_res = requests.delete(del_url, headers=headers)
+        print(f"Deleted run ID: {run_id}, Status: {del_res.status_code}")
+
+
+---
+
+Let me know if you want any specific use cases for AKS Helm deployments, SonarQube quality gates, or Splunk alerts!
+
